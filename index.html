@@ -3,7 +3,7 @@
 <html>
    <head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-       <link rel="shortcut icon" type="image/x-icon" href="https://raw.githubusercontent.com/ongtrieuhau/i23kiwi00-08/main/i23kiwi00-08.ico">
+      <link rel="shortcut icon" type="image/x-icon" href="https://raw.githubusercontent.com/ongtrieuhau/i23kiwi00-08/main/i23kiwi00-08.ico" />
       <title>i23kiwi00-08.html</title>
       <style>
          * {
@@ -27,7 +27,7 @@
 
          .main {
             float: left;
-            width: 60%;
+            width: 100%;
             padding: 0 20px;
          }
 
@@ -40,6 +40,88 @@
             text-align: center;
          }
 
+         /* https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_responsive_form */
+         input[type="text"],
+         select,
+         textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            resize: vertical;
+         }
+
+         label {
+            padding: 12px 12px 12px 0;
+            display: inline-block;
+         }
+
+         input[type="submit"] {
+            background-color: #04aa6d;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            float: right;
+         }
+
+         input[type="submit"]:hover {
+            background-color: #45a049;
+         }
+
+         .container {
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            padding: 20px;
+         }
+
+         .col-25 {
+            float: left;
+            width: 25%;
+            margin-top: 6px;
+         }
+
+         .col-75 {
+            float: left;
+            width: 75%;
+            margin-top: 6px;
+         }
+
+         /* Clear floats after the columns */
+         .row:after {
+            content: "";
+            display: table;
+            clear: both;
+         }
+         /*  */
+
+         /* Group Button */
+         .btn-group button {
+            background-color: #04aa6d; /* Green background */
+            border: 1px solid green; /* Green border */
+            color: white; /* White text */
+            padding: 10px 24px; /* Some padding */
+            cursor: pointer; /* Pointer/hand icon */
+            float: left; /* Float the buttons side by side */
+         }
+
+         /* Clear floats (clearfix hack) */
+         .btn-group:after {
+            content: "";
+            clear: both;
+            display: table;
+         }
+
+         .btn-group button:not(:last-child) {
+            border-right: none; /* Prevent double borders */
+         }
+
+         /* Add a background color on hover */
+         .btn-group button:hover {
+            background-color: #3e8e41;
+         }
+         /*  */
          @media only screen and (max-width: 620px) {
             /* For mobile phones: */
             .menu,
@@ -55,44 +137,42 @@
          // TODO: Replace the following with your app's Firebase project configuration
          // Initialize Firebase
          const app = initializeApp({
-            databaseURL: "https://i23kiwi00-08-default-rtdb.asia-southeast1.firebasedatabase.app",
+            databaseURL: "https://o23-extension-0-default-rtdb.asia-southeast1.firebasedatabase.app",
          });
          const db = getDatabase(app);
-         const starCountRef = ref(db, "users");
+         const starCountRef = ref(db, "/");
          onValue(starCountRef, (snapshot) => {
             const data = snapshot.val();
+            ["DesktopChrome", "DesktopChrome0"].forEach((x) => {
+               let el = document.getElementById(x);
+               if (el !== null) el.value = data[x];
+            });
             console.log(data);
-            // updateStarCount(postElement, data);
          });
       </script>
-<!--       <script type="text/javascript" src="i23kiwi00-08.js"></script> -->
+      <script type="text/javascript" src="i23kiwi00-08.js"></script>
    </head>
    <body style="font-family: Verdana; color: #aaaaaa">
-      <div style="background-color: #e5e5e5; padding: 15px; text-align: center">
-         <h1>Hello World</h1>
-      </div>
-
       <div style="overflow: auto">
-         <div class="menu">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
-            <a href="#">Link 4</a>
-         </div>
-
          <div class="main">
-            <h2>Lorum Ipsum</h2>
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</p>
+            <div class="row">
+               <div class="col-25">
+                  <label for="fname">DesktopChrome</label>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-75">
+                  <input type="text" id="DesktopChrome" />
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-75 btn-group" style="width: 100%">
+                  <button style="width: 33%">Copy email</button>
+                  <button style="width: 33%">Security code</button>
+                  <button style="width: 33%">Single code</button>
+               </div>
+            </div>
          </div>
-
-         <div class="right">
-            <h2>About</h2>
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</p>
-         </div>
-      </div>
-
-      <div style="background-color: #e5e5e5; text-align: center; padding: 10px; margin-top: 7px">
-         <span id="WEBPACK_BUILD_VERSION"></span>
       </div>
    </body>
 </html>
