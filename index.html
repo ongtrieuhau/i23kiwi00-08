@@ -142,14 +142,24 @@
          const db = getDatabase(app);
          const starCountRef = ref(db, "/");
          const arrFields = ["DesktopChrome", "DesktopChrome0"];
-         var rtdbData = undefined;
+         var beforeRtdb = undefined;
          onValue(starCountRef, (snapshot) => {
-            rtdbData = snapshot.val();
+            const curRtdb = snapshot.val();
             arrFields.forEach((x) => {
                let el = document.getElementById(x);
-               if (el !== null) el.value = rtdbData[x];
+               if (el !== null) el.value = curRtdb[x];
             });
-            console.log(rtdbData);
+            let clickIds = ["DesktopChrome-singlecode", "DesktopChrome0-singlecode"];
+            for (let i = 0; i < clickIds.length; i++) {
+               let id = clickIds[i];
+               if (typeof beforeRtdb !== "undefined" && beforeRtdb[id] !== curRtdb[id]) {
+                  document.getElementById("CopyValue").value = curRtdb[id] || "";
+                  copyTextById("CopyValue");
+                  break;
+               }
+            }
+            beforeRtdb = JSON.parse(JSON.stringify(curRtdb));
+            console.log({ curRtdb, beforeRtdb });
          });
          const copyTextById = (id) => {
             var copyText = document.getElementById(id);
@@ -164,7 +174,7 @@
             ["securitycode", "singlecode"].forEach((x) => {
                document.getElementById(`${field}-${x}`).addEventListener("click", async function (event) {
                   let targetId = event.target.id;
-                  document.getElementById("CopyValue").value = rtdbData[targetId] || "";
+                  document.getElementById("CopyValue").value = beforeRtdb[targetId] || "";
                   copyTextById("CopyValue");
                });
             });
