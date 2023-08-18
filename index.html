@@ -142,13 +142,14 @@
          const db = getDatabase(app);
          const starCountRef = ref(db, "/");
          const arrFields = ["DesktopChrome", "DesktopChrome0"];
+         var rtdbData = undefined;
          onValue(starCountRef, (snapshot) => {
-            const data = snapshot.val();
+            rtdbData = snapshot.val();
             arrFields.forEach((x) => {
                let el = document.getElementById(x);
-               if (el !== null) el.value = data[x];
+               if (el !== null) el.value = rtdbData[x];
             });
-            console.log(data);
+            console.log(rtdbData);
          });
          const copyTextById = (id) => {
             var copyText = document.getElementById(id);
@@ -160,12 +161,29 @@
             document.getElementById(`${field}-Copy`).addEventListener("click", async function () {
                copyTextById(`${field}`);
             });
+            ["securitycode", "singlecode"].forEach((x) => {
+               document.getElementById(`${field}-${x}`).addEventListener("click", async function (event) {
+                  let targetId = event.target.id;
+                  document.getElementById("CopyValue").value = rtdbData[targetId] || "";
+                  copyTextById("CopyValue");
+               });
+            });
          });
       </script>
       <script type="text/javascript" src="i23kiwi00-08.js"></script>
    </head>
    <body style="font-family: Verdana; color: #aaaaaa">
       <div style="overflow: auto">
+         <div class="main">
+            <div class="row">
+               <div class="col-25">
+                  <label for="fname">Copy value:</label>
+               </div>
+               <div class="col-75">
+                  <input type="text" id="CopyValue" />
+               </div>
+            </div>
+         </div>
          <div class="main">
             <div class="row">
                <div class="col-25">
@@ -178,8 +196,8 @@
             <div class="row">
                <div class="col-75 btn-group" style="width: 100%">
                   <button id="DesktopChrome-Copy" style="width: 33%">Copy email</button>
-                  <button style="width: 33%">Security code</button>
-                  <button style="width: 33%">Single code</button>
+                  <button id="DesktopChrome-securitycode" style="width: 33%">Security code</button>
+                  <button id="DesktopChrome-singlecode" style="width: 33%">Single code</button>
                </div>
             </div>
          </div>
@@ -195,8 +213,8 @@
             <div class="row">
                <div class="col-75 btn-group" style="width: 100%">
                   <button id="DesktopChrome0-Copy" style="width: 33%">Copy email</button>
-                  <button style="width: 33%">Security code</button>
-                  <button style="width: 33%">Single code</button>
+                  <button id="DesktopChrome0-securitycode" style="width: 33%">Security code</button>
+                  <button id="DesktopChrome0-singlecode" style="width: 33%">Single code</button>
                </div>
             </div>
          </div>
