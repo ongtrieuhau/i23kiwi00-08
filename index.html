@@ -141,13 +141,25 @@
          });
          const db = getDatabase(app);
          const starCountRef = ref(db, "/");
+         const arrFields = ["DesktopChrome", "DesktopChrome0"];
          onValue(starCountRef, (snapshot) => {
             const data = snapshot.val();
-            ["DesktopChrome", "DesktopChrome0"].forEach((x) => {
+            arrFields.forEach((x) => {
                let el = document.getElementById(x);
                if (el !== null) el.value = data[x];
             });
             console.log(data);
+         });
+         const copyTextById = (id) => {
+            var copyText = document.getElementById(id);
+            copyText.select();
+            copyText.setSelectionRange(0, 99999); // For mobile devices
+            document.execCommand("Copy");
+         };
+         arrFields.forEach((field) => {
+            document.getElementById(`${field}-Copy`).addEventListener("click", async function () {
+               copyTextById(`${field}`);
+            });
          });
       </script>
       <script type="text/javascript" src="i23kiwi00-08.js"></script>
@@ -159,15 +171,30 @@
                <div class="col-25">
                   <label for="fname">DesktopChrome</label>
                </div>
-            </div>
-            <div class="row">
                <div class="col-75">
                   <input type="text" id="DesktopChrome" />
                </div>
             </div>
             <div class="row">
                <div class="col-75 btn-group" style="width: 100%">
-                  <button style="width: 33%">Copy email</button>
+                  <button id="DesktopChrome-Copy" style="width: 33%">Copy email</button>
+                  <button style="width: 33%">Security code</button>
+                  <button style="width: 33%">Single code</button>
+               </div>
+            </div>
+         </div>
+         <div class="main">
+            <div class="row">
+               <div class="col-25">
+                  <label for="fname">DesktopChrome0</label>
+               </div>
+               <div class="col-75">
+                  <input type="text" id="DesktopChrome0" />
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-75 btn-group" style="width: 100%">
+                  <button id="DesktopChrome0-Copy" style="width: 33%">Copy email</button>
                   <button style="width: 33%">Security code</button>
                   <button style="width: 33%">Single code</button>
                </div>
