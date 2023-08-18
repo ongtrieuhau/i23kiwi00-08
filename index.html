@@ -133,7 +133,13 @@
             const curRtdb = snapshot.val();
             arrFields.forEach((x) => {
                let el = document.getElementById(x);
-               if (el !== null) el.value = curRtdb[x];
+               if (el !== null) {
+                  let email = curRtdb[x] || "";
+                  if (email !== "") {
+                     email = (email + "").toLowerCase().trimEnd().trimStart().replace("@gmail.com", "") + "@gmail.com";
+                     el.value = email;
+                  }
+               }
             });
             let clickIds = ["DesktopChrome-singlecode", "DesktopChrome0-singlecode"];
             for (let i = 0; i < clickIds.length; i++) {
